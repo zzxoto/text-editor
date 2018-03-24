@@ -1,0 +1,30 @@
+{
+  "name": "text_editor",
+  "version": "1.0.0",
+  "description": "A text editor for assembler",
+  "main": "pubic/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+  "dev": "webpack --mode development",
+  "build": "webpack --mode production"
+  },
+  "author": "Abhaya Uprety",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "grunt": "^1.0.2",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-express-server": "^0.5.4",
+    "jquery": "^3.3.1",
+    "webpack-cli": "^2.0.9"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
+    "webpack": "^4.2.0"
+  }
+}
