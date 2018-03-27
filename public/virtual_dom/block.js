@@ -28,6 +28,7 @@ function BlockFactory(){
 
 /*
 	adds character at the specific line and specific position
+	If adding character causes line to be greater than globals.line_size then pop and return the last element
 */
 BlockFactory.prototype.insertChar = function(lineIndex, letterIndex, char){
 	//divide and attach and merge
@@ -36,7 +37,7 @@ BlockFactory.prototype.insertChar = function(lineIndex, letterIndex, char){
   prefix.push(char);
   this.block[lineIndex] = [...prefix, ...line];
 
-  if(this.block[lineIndex].length >= 	globals.line_size)
+  if(this.block[lineIndex].length > 	globals.line_size)
   	return this.block[lineIndex].pop();
 }
 

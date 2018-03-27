@@ -87,7 +87,7 @@ let virtual_dom = {
       var shiftedLine = this.shiftUp(lineIndex);
       this.bulkInsert(shiftedLine, lineIndex - 1, this.getLastLetterIndex(lineIndex - 1));
     }
-  }
+  },
 
   /*
     Returns True if line is big enough to contain index @param letterIndex
@@ -108,11 +108,11 @@ let virtual_dom = {
   },
 
   /*
-    Inserts each character in {Array}`toInsert` onto the line at `lineIndex` at letter `letterIndex`
+    Inserts each character in {Array}`toInsert` onto the line at `lineIndex` at position `letterIndex`
     if line is not completely filled:
-      "shift" array and insert into the line
+      "shift" array and insert somewhere between the line
     if line is already completely filled:
-      "pop" array and insert SUBTLE TRICK!!
+      "pop" array and insert at the end of the line. SUBTLE TRICK!!
   */
   bulkInsert: function(toInsert, lineIndex, letterIndex){
     var blocksAffected = new Set();
