@@ -1,16 +1,26 @@
+/*
+  Listens to key presses and calls functions appropriately
+*/
+
+/*
+    This is where Raect magic happens
+*/
+import App from './react_components/app.js';  
+import ReactDOM from 'react-dom';
+import React from 'react';
+ReactDOM.render( <App />, document.getElementById("root"));
+
 import $ from "jquery";
-import * as globals from './globals.js';
-import vDOM from './virtualDOM';
-import Caret from './caret';
 
-let caret = new Caret();
+//vDOM is Data Structure representation of DOM
+import vDom from './virtual_dom';
 
-caret.subscribe("index", function(args){
-    let lineIndex = args[0];
-    let letterIndex = args[1];
-    console.log(lineIndex, letterIndex); 
-});
- 
+//logic for caret
+import caret from './caret';
+
+//DOM reflection for caret
+import './caret/caret.js';
+
 /* 
     e.key = "x"
     e.keyCode = 88
@@ -18,7 +28,7 @@ caret.subscribe("index", function(args){
 $("textarea").keydown(function(e){
   switch(e.key){
     case "Enter":
-    console.log("Enter");
+    console.log("Enter"); 
     break;
     case "Tab":
     console.log("Tab");
@@ -30,16 +40,16 @@ $("textarea").keydown(function(e){
     console.log("Backspace");
     break;  
     case "ArrowUp":
-    console.log("Arrow");
+    caret.shiftUp();
     break;
     case "ArrowLeft":
-    console.log("Arrow");
+    caret.shiftLeft();
     break;
     case "ArrowDown":
-    console.log("Arrow");
+    caret.shiftDown();
     break;
     case "ArrowRight":
-    console.log("Arrow");
+    caret.shiftRight(); 
     break;
     default:
     break;

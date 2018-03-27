@@ -1,7 +1,9 @@
+import globals from '../globals.js';
+
 function BlockFactory(){
 	this.block = {
-		0: [],
-		1: [],
+		0: ["H", "e", "l", "l", "o", " ", "W", "o", "r", "l", "d"],
+		1: ["R", "a", "m", "e", "n"],
 		2: [],
 		3: [],
 		4: [],
@@ -28,10 +30,14 @@ function BlockFactory(){
 	adds character at the specific line and specific position
 */
 BlockFactory.prototype.insertChar = function(lineIndex, letterIndex, char){
+	//divide and attach and merge
 	let line = [...this.block[lineIndex]];
 	let prefix = line.splice(0, letterIndex);
   prefix.push(char);
   this.block[lineIndex] = [...prefix, ...line];
+
+  if(this.block[lineIndex].length >= 	globals.line_size)
+  	return this.block[lineIndex].pop();
 }
 
 /*
@@ -44,20 +50,20 @@ BlockFactory.prototype.getChar = function(lineIndex, charIndex){
 BlockFactory.prototype.getLastLineIndex = function(){
 	for(var i in this.block){
 		if(this.block[i].length === 0)
-			return i;
+			return i-1;//CAN BE -1 NEED TO BE CAREFUL
 	}
 	return 19;
 };
 
 BlockFactory.prototype.getLastLetterIndex = function(lineIndex){
-	return this.block[lineIndex].length - 1;
+	return this.block[lineIndex].length;
 }
 
 /*
-	returns True if line @param is of size letterIndex
+	returns True if line @param lineIndex is at least of size @param letterIndex
 */
 BlockFactory.prototype.lineContainsLetter = function(lineIndex, letterIndex){
-	return this.block[lineIndex].length <= letterIndex;
+	return this.block[lineIndex].length >= letterIndex;
 }
 
 
@@ -65,6 +71,31 @@ BlockFactory.prototype.prettyPrint = function(){
 	for(var i in this.block){
 		console.log(this.block[i]);
 	}
+}
+
+/*
+	@param  lineIndex {Number},
+	@param line {Array<String>}
+*/
+BlockFactory.prototype.getLine = function(lineIndex, line){
+	return this.block[lineIndex];
+}
+
+BlockFactory.prototype.setLine = function(){
+	this.block[lineIndex] = line;
+}
+
+/*
+	Shifts every line a step up
+	Returns the first line
+*/
+BlockFactory.prototype.shiftUp = function(){
+	var toReturn = this.block[0];
+	for(var i = 1; i < globals.block_size; i++){
+		this.block[i - 1] = this.block[i]; 
+	}
+	this.block[globals.block_size - 1] = [];
+	return toReturn;
 }
 
 

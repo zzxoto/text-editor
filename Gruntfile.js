@@ -58,14 +58,16 @@ module.exports = function(grunt){
 
 		cp.stdout.on("data", data=>{
 			console.log(data.toString());
-		})
+		});
+
 		cp.stderr.on("data", data=>{
 			console.log(data.toString());
-		})
+		});
 
 		cp.on("error", err=>{
 			console.log(err)
 		});
+		
 		cp.on("exit", ()=>{
 			console.log("test completed");
 			done();
@@ -74,6 +76,6 @@ module.exports = function(grunt){
 	});
 
 	grunt.registerTask('test', ['bundle', '_test']);
-	grunt.registerTask('serve', ['express:dev', 'watch']);
+	grunt.registerTask('serve', ['bundle', 'express:dev', 'watch']);
 }
   
