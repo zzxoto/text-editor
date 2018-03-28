@@ -9,57 +9,59 @@ import vDom from "../virtual_dom";
 
 
 function Caret(){
-	this.lineIndex = 0;
-	this.letterIndex = 0; 
+	this.caretY = 0;
+	this.caretX = 0; 
 
 	this.setIndices = function(lineIndex, letterIndex){
-		this.lineIndex = lineIndex;
-		this.letterIndex = letterIndex;
+		this.caretY = lineIndex;
+
 		//if letterIndex is beyond the last character, set it to be the last character
-		this.letterIndex = vDom.lineContainsLetter(lineIndex, letterIndex)? letterIndex: vDom.getLastLetterIndex(lineIndex)+1;
-		this.publish("index", {lineIndex: this.lineIndex, letterIndex: this.letterIndex});
+		this.caretX = (letterIndex < vDom.getLastLetterIndex(lineIndex))?
+									letterIndex: vDom.getLastLetterIndex(lineIndex) + 1;
+
+		this.publish("index", {caretX: this.caretX, caretY: this.caretY});
 	};
 
 	this.shiftLeft = function(){	
-		if(this.letterIndex <= 0){
+		if(this.caretX <= 0){
 			//caret is already at the left most. In this case we go to right most character one line above current
-				if(this.lineIndex > 0){
-					var letterIndex = vDom.getLastLetterIndex(this.lineIndex - 1);
-					this.setIndices(this.lineIndex - 1, letterIndex);
+				if(this.caretY > 0){
+					var caretX = vDom.getLastLetterIndex(this.caretY - 1) + 1;
+					this.setIndices(this.caretY - 1, caretX);
 				}
 			}
 		else
-			this.setIndices(this.lineIndex, this.letterIndex-1);
+			this.setIndices(this.caretY, this.caretX-1);
 	};
 
 	this.shiftRight = function(){
-		var rightMostIndex = vDom.getLastLetterIndex(this.lineIndex);
-		if(this.letterIndex >= rightMostIndex){
+		var rightMost = vDom.getLastLetterIndex(this.caretY) + 1;
+		if(this.caretX >= rightMost){
 			//caret is already at the right most. In this case we go to first character one line below current.
-			if(this.lineIndex < vDom.getLastLineIndex())
-				this.setIndices(this.lineIndex + 1, 0);
+			if(this.caretY < vDom.getLastLineIndex())
+				this.setIndices(this.caretY + 1, 0);
 		}
 		else
-			this.setIndices(this.lineIndex, this.letterIndex + 1);
+			this.setIndices(this.caretY, this.caretX + 1);
 	};
 
 	this.shiftUp = function(){
-		if(this.lineIndex > 0 ){
-			var aboveLastLetterIndex = vDom.getLastLetterIndex(this.lineIndex - 1);
-			if(aboveLastLetterIndex >= this.letterIndex)
-				this.setIndices(this.lineIndex - 1, this.letterIndex)
+		if(this.caretY > 0 ){
+			var upperLastCaretX = vDom.getLastLetterIndex(this.caretY - 1) + 1;
+			if(upperLastCaretX >= this.caretX)
+				this.setIndices(this.caretY - 1, this.caretX);
 			else
-				vDom.setIndices(this.lineIndex - 1, aboveLastLetterIndex);
+				this.setIndices(this.caretY - 1, upperLastCaretX);
 		}
 	};
 	
 	this.shiftDown = function(){
-		if(this.lineIndex < vDom.getLastLineIndex()){
-			var belowLastLetterIndex = vDom.getLastLetterIndex(this.lineIndex + 1);
-			if(belowLastLetterIndex >= this.letterIndex)
-				this.setIndices(this.lineIndex + 1, this.letterIndex);
+		if(this.caretY < vDom.getLastLineIndex()){
+			var belowLastCaretX = vDom.getLastLetterIndex(this.caretY + 1) + 1;
+			if(belowLastCaretX >= this.caretX)
+				this.setIndices(this.caretY + 1, this.caretX);
 			else
-				this.setIndices(this.lineIndex + 1, belowLastLetterIndex); 
+				this.setIndices(this.caretY + 1, belowLastCaretX); 
 		}	 
 	};
 };
