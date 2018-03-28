@@ -2,7 +2,6 @@
 	-Listens to click event
 	-Sets caret Position to DOM accordingly
 */
-
 import $ from "jquery";
 import * as globals from '../globals.js';
 import PubSub from "../pubsub";

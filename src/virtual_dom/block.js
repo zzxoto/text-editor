@@ -4,7 +4,7 @@ function BlockFactory(){
 	this.block = {
 		0: ["H", "e", "l", "l", "o", " ", "W", "o", "r", "l", "d"],
 		1: ["R", "a", "m", "e", "n"],
-		2: [],
+		2: ["v", "a", "r"], 
 		3: [],
 		4: [],
 		5: [],
@@ -67,13 +67,11 @@ BlockFactory.prototype.lineContainsLetter = function(lineIndex, letterIndex){
 	return this.block[lineIndex].length >= letterIndex;
 }
 
-
 BlockFactory.prototype.prettyPrint = function(){
 	for(var i in this.block){
 		console.log(this.block[i]);
 	}
 }
-
 
 BlockFactory.prototype.getLine = function(lineIndex){
 	return this.block[lineIndex];

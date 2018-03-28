@@ -29,7 +29,6 @@ let virtual_dom = {
     return (i >= this.getLastBlockIndex())? this.getLastBlockIndex(): i;
   },
 
-
   /*  
     if line @param lineIndex is inside existing blocks, returns block. Else create new BLock
     ONLY USED BY insert char
@@ -44,7 +43,6 @@ let virtual_dom = {
     }
   },
 
-  
   getLastLetterIndex: function(lineIndex){
     var block = this.structure[this.getBlockIndex(lineIndex)];
     return block.getLastLetterIndex(lineIndex % globals.block_size);
@@ -62,6 +60,14 @@ let virtual_dom = {
     this.structure[this.getLastBlockIndex() + 1] = new BlockFactory();
   },
 
+  /*
+    Returns True if line is big enough to contain index @param letterIndex
+  */
+  lineContainsLetter: function(lineIndex, letterIndex){
+    var block = this.structure[this.getBlockIndex(lineIndex)];
+    return block.lineContainsLetter(lineIndex % globals.block_size, letterIndex);
+  }, 
+ 
   /*
     char => [a-zA-Z0-9[[Symbols]][[Space]]]
     returns array of affected block in the process of inserting the character
@@ -82,7 +88,7 @@ let virtual_dom = {
         right: 1
       })
     }
-  },
+  }
 };
 virtual_dom = {...virtual_dom, ...new PubSub()};
 

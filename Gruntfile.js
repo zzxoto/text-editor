@@ -19,8 +19,8 @@ module.exports = function(grunt){
 		watch:{
 			scripts:{
 				files: [
-					'public/**/*.js',
-					'public/*.js',
+					'src/**/*.js',
+					'src/*.js',
 				],
 				tasks: ['bundle'],
 				options: {

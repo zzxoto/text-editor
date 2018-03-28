@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import Line from './LineComponent';
 
 export default class BlockComponent extends Component{
-	
+	componentDidMount(){
+		console.log(this.props.struc);
+	}
+
 	shouldComponentUpdate(){
 		this.props.shouldUpdate.map(x=>{
 			if(x == this.props.id)
@@ -21,7 +24,6 @@ export default class BlockComponent extends Component{
 				/>
 			)
 		});
-		
 		return(<React.Fragment>{line}</React.Fragment>);
 	}
 }; 

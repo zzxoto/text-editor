@@ -1,0 +1,29 @@
+----------------------------
+	||User presses key||----------->||filtered by switch statement in src/index.js||---||if arrow keys or clicks||---->||move caret||
+									               ----||Else||--->||Change virtual dom||--->||Reflect that change on DOM||--->||Move the caret appropriately||									|
+																		
+
+
+>>Virtual DOM is the Datastructure that represents the structure of our DOM.
+>>Virutal DOM comprises of --Blocks-- and --lines--.
+>>Each block is a segment of 20 lines. Each line is array of 100 characters at max.
+>>Main advantage of this abstraction is taht say at an instance change occured at line 25 then only block I have to rerender is block math.round(25 / 20) i.e. block 1.
+>>Another neat thing about this architecture: React relies on `immutability` of the data i.e. whenever I want to mutate some structure, instead of mutating it directly, make a new copy, 
+  then mutate it.But, If I am careful enough to track what blocks have changed, then I can get away with immutability and have better performance!!.
+-------------------------------
+
+Things that will be difficult to imitate.
+>> CTRL + Z --> To imitate undo feature, I have to somehow keep track of 'snapshot' of my virtualDOM. I am thinking of, stacking informations like {line: 20, char: 'a'},
+   instead of actually making seperate copy of virtualDOM on every changes, such that I could reverse the change based on information.
+>> Bulk copy and bulk delete --> It will create chaos into my neat 20 line segment block structure. So, many edge cases.
+-------------------------------
+
+Side Notes:
+	>>It started off as some doodling in Jquery then, MVC kind of pattern began to emerge, then translating VirtualDOM into actual DOM would have been so messy had it not been for React.
+	>>Probably wil get rid of Jquery entirely in future.
+	>>Backspace and bulkInsert logic have been implemented in earlier commit.
+
+
+
+
+

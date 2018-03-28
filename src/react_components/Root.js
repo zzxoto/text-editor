@@ -24,7 +24,7 @@ class Root extends Component{
 			return(
 				<Block key={x}
 					id={x}
-					struc={vDom.structure[x]}
+					struc={vDom.structure[x].block}
 					shouldUpdate={this.state.blocksChanged}
 				/>
 			)

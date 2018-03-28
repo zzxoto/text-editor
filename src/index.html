@@ -9,16 +9,25 @@
 				font-size: 1em;
 			}
 			.line{
-				height: 20px;;
+				height: 20px;
 			}
 			#editor{
 				position: relative;
+				background-color: grey;
 			}
 			#caret{
 				width: 2px;
 				height: 20px;
 				position: absolute;
+				top: 0;
+				left: 0;
 				background-color: black;
+			}
+			.line{
+				background-color: lightBlue;
+			}
+			.keyword{
+				color: blue;
 			}
 		</style>
 	</head>
@@ -27,10 +36,9 @@
 	<textarea spellcheck="false" autocapitalize="off"></textarea>
 		<div id="editor">
 			<div id="caret"></div>
-			<div class="line"><span>Hello World</span></div>
-			<div class="line"><span>Ramen</span></div>
+			<div id="react-entry"></div>
 		</div>
 	</body>
-	<script src="./editor.js"></script>
+	<script src="./app.js"></script>
 </html>
 	

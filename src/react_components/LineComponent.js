@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Word from './WordComponent';
 
 export default class LineComponent extends Component{
-	render(){
+	render(){ 
 		var words = groupStrings(this.props.words);
 		words = words.map((x, index)=>{
 			return(
@@ -20,7 +20,7 @@ export default class LineComponent extends Component{
 		);
 	}
 }
-
+ 
 
 /*
 	@param arr{Array<String>}

@@ -2,7 +2,6 @@
 	Main logic for setting Caret position
 	Invokes vDom methods to ascertain edge cases for setting position.
 */
-
 import $ from "jquery";
 import * as globals from '../globals.js';
 import PubSub from "../pubsub";
@@ -16,9 +15,8 @@ function Caret(){
 	this.setIndices = function(lineIndex, letterIndex){
 		this.lineIndex = lineIndex;
 		this.letterIndex = letterIndex;
-
 		//if letterIndex is beyond the last character, set it to be the last character
-		this.letterIndex = vDom.lineContainsLetter(lineIndex, letterIndex)? letterIndex: vDom.getLastLetterIndex(lineIndex);
+		this.letterIndex = vDom.lineContainsLetter(lineIndex, letterIndex)? letterIndex: vDom.getLastLetterIndex(lineIndex)+1;
 		this.publish("index", {lineIndex: this.lineIndex, letterIndex: this.letterIndex});
 	};
 
