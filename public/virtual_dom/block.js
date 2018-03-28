@@ -27,7 +27,7 @@ function BlockFactory(){
 }
 
 /*
-	adds character at the specific line and specific position
+	adds character at the line`lineIndex` at position `letterIndex`
 	If adding character causes line to be greater than globals.line_size then pop and return the last element
 */
 BlockFactory.prototype.insertChar = function(lineIndex, letterIndex, char){
@@ -57,7 +57,7 @@ BlockFactory.prototype.getLastLineIndex = function(){
 };
 
 BlockFactory.prototype.getLastLetterIndex = function(lineIndex){
-	return this.block[lineIndex].length;
+	return this.block[lineIndex].length-1;
 }
 
 /*
@@ -74,29 +74,36 @@ BlockFactory.prototype.prettyPrint = function(){
 	}
 }
 
+
+BlockFactory.prototype.getLine = function(lineIndex){
+	return this.block[lineIndex];
+}
+
 /*
 	@param  lineIndex {Number},
 	@param line {Array<String>}
 */
-BlockFactory.prototype.getLine = function(lineIndex, line){
-	return this.block[lineIndex];
-}
-
-BlockFactory.prototype.setLine = function(){
+BlockFactory.prototype.setLine = function(lineIndex, line){
 	this.block[lineIndex] = line;
 }
 
 /*
+if @param lineIndex === null
 	Shifts every line a step up
 	Returns the first line
+if @param lineIndex === number
+	pops line @index lineIndex
+	shifts everything up upto the lineIndex
 */
-BlockFactory.prototype.shiftUp = function(){
+BlockFactory.prototype.shiftUp = function(lineIndex){
+	lineIndex = lineIndex? lineIndex: 0;
 	var toReturn = this.block[0];
 	for(var i = 1; i < globals.block_size; i++){
 		this.block[i - 1] = this.block[i]; 
 	}
 	this.block[globals.block_size - 1] = [];
 	return toReturn;
+	}
 }
 
 
