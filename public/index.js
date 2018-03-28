@@ -5,20 +5,23 @@
 /*
     This is where Raect magic happens
 */
-import App from './react_components/app.js';  
+import Root from './react_components/Root.js';  
 import ReactDOM from 'react-dom';
 import React from 'react';
-ReactDOM.render( <App />, document.getElementById("root"));
 
+//Ought to be called at the top for correct dependency graph
+ReactDOM.render( <Root />, document.getElementById("editor"));
+
+//Hard to resist jquery
 import $ from "jquery";
 
-//vDOM is Data Structure representation of DOM
+//vDOM is virtual Data Structure representation of DOM
 import vDom from './virtual_dom';
 
 //logic for caret
 import caret from './caret';
 
-//DOM reflection for caret
+//For pulling this file into dependency graph of webpack
 import './caret/caret.js';
 
 /* 

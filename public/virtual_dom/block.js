@@ -103,7 +103,6 @@ BlockFactory.prototype.shiftUp = function(lineIndex){
 	}
 	this.block[globals.block_size - 1] = [];
 	return toReturn;
-	}
 }
 
 
