@@ -1,4 +1,4 @@
-#Getting up and running
+### Getting up and running  
 **IF Grunt is not installed**  
 npm install  
 npx webpack  
