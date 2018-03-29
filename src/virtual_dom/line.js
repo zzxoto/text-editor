@@ -1,6 +1,4 @@
-import globals from '../globals.js';
-
-
+import * as globals from '../globals.js';
 /*
 	LinkedList whose data field is Array<String>
 */
@@ -31,6 +29,20 @@ LineFactory.prototype.insertChar = function(letterIndex, char){
 		return this.line.pop();
 };
 
+/*
+	Removes character at index `letterIndex` and returns the character
+	If not possible, returns null
+*/
+LineFactory.prototype.removeChar = function(letterIndex){
+	var toReturn;
+	if(letterIndex > 0 && letterIndex < this.line.length - 1)
+		return;
+	let prefix = this.line.splice(0, letterIndex + 1); toReturn = prefix.pop();
+	this.line = [...prefix, ...this.line];
+	return toReturn;
+}
+
+export default LineFactory;
 
 
 

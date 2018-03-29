@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import Word from './WordComponent';
 
 export default class LineComponent extends Component{
+	
+	shouldComponentUpdate(nextProps){
+		return nextProps.line !== this.props.line;
+	}
+
 	render(){ 
-		var words = groupStrings(this.props.words);
+		var words = groupStrings(this.props.line);
 		words = words.map((x, index)=>{
 			return(
 				<Word 

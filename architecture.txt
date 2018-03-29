@@ -5,11 +5,10 @@
 
 
 >>Virtual DOM is the Datastructure that represents the structure of our DOM.
->>Virutal DOM comprises of --Blocks-- and --lines--.
->>Each block is a segment of 20 lines. Each line is array of 100 characters at max.
->>Main advantage of this abstraction is taht say at an instance change occured at line 25 then only block I have to rerender is block math.round(25 / 20) i.e. block 1.
->>Another neat thing about this architecture: React relies on `immutability` of the data i.e. whenever I want to mutate some structure, instead of mutating it directly, make a new copy, 
-  then mutate it.But, If I am careful enough to track what blocks have changed, then I can get away with immutability and have better performance!!.
+>>Virutal DOM has a reference to the head of linked list.
+>>Every node in the linekd list represents a line
+>>A line is an array of characters
+>>To add a new line any where, add a node in the respective index
 -------------------------------
 
 Things that will be difficult to imitate.

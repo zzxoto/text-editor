@@ -24,37 +24,47 @@ import './caret/caret.js';
     e.keyCode = 88
 */
 var $ta = $("textarea");
-$ta.keydown(function(e){
-    switch(e.key){
-        case "Enter":
-        console.log("Enter"); 
-        break;
-        case "Tab":
-        console.log("Tab");
-        break;
-        case " ":
-        console.log("Space");
-        break;
-        case "Backspace":
-        console.log("Backspace");
-        break;  
-        case "ArrowUp":
-        caret.shiftUp();
-        break;
-        case "ArrowLeft":
-        caret.shiftLeft();
-        break;
-        case "ArrowDown":
-        caret.shiftDown();
-        break;
-        case "ArrowRight":
-        caret.shiftRight(); 
-        break;
-        default:
-        break; 
-    }
-});
+
+$(function(){
+    $ta.keydown(function(e){
+        var caretY = caret.caretY;
+        var caretX = caret.caretX;
+        switch(e.key){
+            case "Enter":
+            vDom.insertNewLine(caretY, caretX);
+            caret.shiftDown();
+            break;
+            case "Tab":
+            console.log("Tab");
+            break;
+            case "Backspace":
+            vDom.removeChar(caretY, caretX - 1);
+            caret.shiftLeft();
+            break;  
+            case "ArrowUp":
+            caret.shiftUp();
+            break;
+            case "ArrowLeft":
+            caret.shiftLeft();
+            break;
+            case "ArrowDown":
+            caret.shiftDown();
+            break;
+            case "ArrowRight":
+            caret.shiftRight(); 
+            break;
+            default:
+            if(e.key.length === 1){//avoiding SHIFT, CONTROL, etc
+                vDom.insertChar(caretY, caretX, e.key);
+                caret.shiftRight();
+                break; 
+            }
+        }
+        $ta.val("");
+    });
+    $ta.focus();
+}); 
 
 $("#editor").click(()=>{
-    $ta.focus();
+    $ta.focus(); 
 })

@@ -10,12 +10,12 @@ import caret from './index.js';
 let editor = $("#editor");
 let ca = $("#caret");
 
-caret.subscribe("index", ({lineIndex, letterIndex})=>{
-  lineIndex = globals.line_height * lineIndex;
-  letterIndex = globals.letter_width * letterIndex;
+caret.subscribe("index", ({caretY, caretX})=>{
+  caretY = globals.line_height * caretY;
+  caretX = globals.letter_width * caretX;
   ca.css({
-  	top: lineIndex,
-  	left: letterIndex
+  	top: caretY,
+  	left: caretX
   })
 });
 

@@ -1,37 +1,29 @@
 import React, { Component } from 'react';
 import vDom from '../virtual_dom';
-import Block from './BlockComponent';
+import Line from './LineComponent';
 
 class Root extends Component{
 	
-	constructor(){
-		super();
-		this.state={
-			blocksChanged: []
-		}
-	}
-
 	componentDidMount(){
-		vDom.subscribe("blocksAffected", ({blocksAffected})=>{
-			this.setState({
-				blocksChanged: blocksAffected
-			});
+
+		vDom.subscribe("changed", ()=>{
+			this.setState({});
 		});
 	}
 
 	render(){
-		var blocks = Object.keys(vDom.structure).map(x=>{
+		var lines = vDom.getLines().map( (line, index)=>{
 			return(
-				<Block key={x}
-					id={x}
-					struc={vDom.structure[x].block}
-					shouldUpdate={this.state.blocksChanged}
+				<Line key={index}
+					id={index}
+					line={line}
+					className="line"
 				/>
 			)
 		});
 		return (
-			<React.Fragment>{blocks}</React.Fragment>
-		);
+			<React.Fragment>{lines}</React.Fragment>
+		); 
 	}
 	
 };

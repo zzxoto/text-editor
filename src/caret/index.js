@@ -14,12 +14,12 @@ function Caret(){
 
 	this.setIndices = function(lineIndex, letterIndex){
 		this.caretY = lineIndex;
-
+		console.log(vDom.getLastLetterIndex(lineIndex));
 		//if letterIndex is beyond the last character, set it to be the last character
-		this.caretX = (letterIndex < vDom.getLastLetterIndex(lineIndex))?
+		this.caretX = (letterIndex <= vDom.getLastLetterIndex(lineIndex))?
 									letterIndex: vDom.getLastLetterIndex(lineIndex) + 1;
-
-		this.publish("index", {caretX: this.caretX, caretY: this.caretY});
+    console.log(this.caretX);
+		this.publish("index", {caretY: this.caretY, caretX: this.caretX});
 	};
 
 	this.shiftLeft = function(){	
