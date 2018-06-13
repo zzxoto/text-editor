@@ -50,11 +50,9 @@ module.exports = function(grunt){
 		});
 	});
 
-	grunt.registerTask('_test', 'performs test', function(){
+	grunt.registerTask('jasmineTest', 'performs test', function(){
 		var done = this.async();
-		let cp = exec('node test.js',{
-			cwd: path.resolve(__dirname, 'dist')
-		});
+		let cp = exec('npm test');
 
 		cp.stdout.on("data", data=>{
 			console.log(data.toString());
@@ -75,7 +73,7 @@ module.exports = function(grunt){
 
 	});
 
-	grunt.registerTask('test', ['bundle', '_test']);
+	grunt.registerTask('test', ['bundle', 'jasmineTest']);
 	grunt.registerTask('serve', ['bundle', 'express:dev', 'watch']);
 }
   

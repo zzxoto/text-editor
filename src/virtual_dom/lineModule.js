@@ -8,11 +8,10 @@ function LineModule(){
 	/*
 		Inserts new Line with arr @param{arr} at index @param`index`
 	*/
-	this.addLine = function(index, arr=[]){
+	this.addLine = function(index){
 		this.lastLineIndex++;
 		
 		let newLine = new LineFactory();
-		newLine.line = arr;
 
 		if(index == 0){
 			newLine.next = this.head;
@@ -61,16 +60,13 @@ function LineModule(){
 	
 	this.getLine = function(index){
 		if(index > this.lastLineIndex)
-			return null;
-		
-		var curr = this.head;
+			throw "getLine index out of bounds";
+		var _head = this.head;
 		while(index > 0){
-			curr = curr.next;
+			_head = _head.next;
 			index--;
 		}
-		// console.log("getLine");
-		// console.log(curr);
-		return curr;
+		return _head;
 	}
 
 	/*
@@ -92,7 +88,7 @@ function LineModule(){
 	this.print = function(){
 		var _head = this.head;
 		while(_head){
-			console.log(_head.line);
+			console.log(_head);
 			_head = _head.next;
 		}
 	}

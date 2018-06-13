@@ -4,7 +4,7 @@
   "description": "A text editor for assembler",
   "main": "public/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node node_modules/jasmine/bin/jasmine",
     "dev": "webpack --mode development",
     "build": "webpack --mode production"
   },
@@ -28,6 +28,7 @@
     "babel-preset-es2016": "^6.24.1",
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "jasmine": "^2.8.0",
     "webpack": "^4.2.0"
   }
 }

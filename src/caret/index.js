@@ -14,11 +14,9 @@ function Caret(){
 
 	this.setIndices = function(lineIndex, letterIndex){
 		this.caretY = lineIndex;
-		console.log(vDom.getLastLetterIndex(lineIndex));
 		//if letterIndex is beyond the last character, set it to be the last character
 		this.caretX = (letterIndex <= vDom.getLastLetterIndex(lineIndex))?
-									letterIndex: vDom.getLastLetterIndex(lineIndex) + 1;
-    console.log(this.caretX);
+			letterIndex: vDom.getLastLetterIndex(lineIndex);
 		this.publish("index", {caretY: this.caretY, caretX: this.caretX});
 	};
 
@@ -35,7 +33,7 @@ function Caret(){
 	};
 
 	this.shiftRight = function(){
-		var rightMost = vDom.getLastLetterIndex(this.caretY) + 1;
+		var rightMost = vDom.getLastLetterIndex(this.caretY);
 		if(this.caretX >= rightMost){
 			//caret is already at the right most. In this case we go to first character one line below current.
 			if(this.caretY < vDom.getLastLineIndex())
@@ -47,7 +45,7 @@ function Caret(){
 
 	this.shiftUp = function(){
 		if(this.caretY > 0 ){
-			var upperLastCaretX = vDom.getLastLetterIndex(this.caretY - 1) + 1;
+			var upperLastCaretX = vDom.getLastLetterIndex(this.caretY - 1);
 			if(upperLastCaretX >= this.caretX)
 				this.setIndices(this.caretY - 1, this.caretX);
 			else
@@ -57,7 +55,7 @@ function Caret(){
 	
 	this.shiftDown = function(){
 		if(this.caretY < vDom.getLastLineIndex()){
-			var belowLastCaretX = vDom.getLastLetterIndex(this.caretY + 1) + 1;
+			var belowLastCaretX = vDom.getLastLetterIndex(this.caretY + 1);
 			if(belowLastCaretX >= this.caretX)
 				this.setIndices(this.caretY + 1, this.caretX);
 			else
@@ -69,5 +67,5 @@ function Caret(){
 Caret.prototype = {...new PubSub(), ...Caret.prototype};
  
 let caret = new Caret();
- 
+
 export default caret;

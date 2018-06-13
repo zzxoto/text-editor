@@ -22,9 +22,9 @@ caret.subscribe("index", ({caretY, caretX})=>{
 $("#editor").click(function(e){
   var clickX = e.clientX - $(this).offset().left;
   var clickY = e.clientY - $(this).offset().top;
-  
   var lineIndex = Math.floor(clickY / globals.line_height);
   var letterIndex = Math.round(clickX / globals.letter_width);
-    
+  console.log(lineIndex);
+  console.log(letterIndex);
   caret.setIndices(lineIndex, letterIndex);
 });  
