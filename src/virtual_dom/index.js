@@ -67,7 +67,7 @@ var virtual_dom = {
 		return this.struc;
 	},
 
-	removeAndShiftUp: function(lineIndex){
+	removeAndShiftUp: function(lineIndex){//this has error
 		var line1 = this.struc.getLine(lineIndex - 1);
 		var line2 = this.struc.getLine(lineIndex);
 		this.struc.removeLine(lineIndex);

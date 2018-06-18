@@ -15,9 +15,6 @@ import vDom from './virtual_dom';
 //logic for caret
 import caret from './caret';
 
-//For pulling this file into dependency graph of webpack
-import './caret/caret.js';
-
 /*  
 Listens to key presses and calls functions appropriately 
 e.key = "x"

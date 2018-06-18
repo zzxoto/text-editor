@@ -8,6 +8,7 @@ import PubSub from "../pubsub";
 import vDom from "../virtual_dom";
 
 
+
 function Caret(){
 	this.caretY = 0;
 	this.caretX = 0; 
@@ -17,7 +18,7 @@ function Caret(){
 		//if letterIndex is beyond the last character, set it to be the last character
 		this.caretX = (letterIndex <= vDom.getLastLetterIndex(lineIndex))?
 			letterIndex: vDom.getLastLetterIndex(lineIndex);
-		this.publish("index", {caretY: this.caretY, caretX: this.caretX});
+		cssChanges(this.caretY, this.caretX);
 	};
 
 	this.shiftLeft = function(){	
@@ -61,11 +62,28 @@ function Caret(){
 			else
 				this.setIndices(this.caretY + 1, belowLastCaretX); 
 		}	 
-	};
+	}
 };
-
-Caret.prototype = {...new PubSub(), ...Caret.prototype};
- 
 let caret = new Caret();
-
 export default caret;
+
+
+let editor = $("#editor");
+let ca = $("#caret");
+
+editor.click(function(e){
+  var clickX = e.clientX - $(this).offset().left;
+  var clickY = e.clientY - $(this).offset().top;
+  var lineIndex = Math.floor(clickY / globals.line_height);
+  var letterIndex = Math.round(clickX / globals.letter_width);
+  caret.setIndices(lineIndex, letterIndex);
+});  
+
+function cssChanges(caretY, caretX){
+	var caretY = globals.line_height * caretY;
+  var caretX = globals.letter_width * caretX;
+  ca.css({
+  	top: caretY,
+  	left: caretX
+  })
+}

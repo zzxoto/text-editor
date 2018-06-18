@@ -26,10 +26,6 @@ LineFactory.prototype.isEmpty = function(){
 LineFactory.prototype.insertChar = function(letterIndex, char){
 	this.line.splice(letterIndex, 0, char);
 	this.line = [...this.line];
-	
-	//globals.line_size will be deprecated
-	// if(this.line.length > globals.line_size)
-	// 	return this.line.pop();
 };
 
 /*
@@ -59,20 +55,16 @@ LineFactory.prototype.setLine = function(line){
 	this.line = line;
 }
 
+/**
+*@param line, LineFactory object
+*/
 LineFactory.prototype.append = function(line){
-	this.line = [...this.line, ...line];
+	this.line = [...this.line, ...line.line];
+	console.log(this.line);
+	console.log(line);
 }
 
-
-
 export default LineFactory;
-
-
-
-
-
-
-
 
 
 
