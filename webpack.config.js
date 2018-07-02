@@ -2,8 +2,9 @@ var path = require("path");
 
 module.exports = {
 	entry: {
-		app: path.resolve(__dirname, 'src', 'index.js'),
-		"test.spec": path.resolve(__dirname, 'spec', 'index.spec.js')
+		//app: path.resolve(__dirname, 'src', 'index.js'),
+		"test.spec": path.resolve(__dirname, 'spec', 'index.spec.js'),
+		app_v2: path.resolve(__dirname, 'src2', 'index.js')
 	},
 	output:{
 		path: __dirname+'/dist',

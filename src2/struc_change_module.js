@@ -1,4 +1,26 @@
+import struc from './struc_module.js';
+import InstructionFootprintToken from './instruction_footprint_token.js';
 
+/**
+*Footpprint rule
+*
+*Add Character
+*State | | -> Instruction add(0, 0, 'a') -> State | a | -> Footprint (0, 0, 'add', <methodname>, a)
+*
+*Remove Character
+*State | a | -> Instruction remove(0, 1) -> State | | -> Footprint (0, 1, 'remove', <methodname>, a)
+*
+*Add Line
+*State | a | -> Instruction addLine(1) -> State | a | -> Footprint (0, <letterIndex>, <methodName>, null)  
+*																								|   |
+*Remove Line
+*State | a | -> Instruction removeLine(1) -> State | a | -> Footprint (1, <letterIndex>, <methodName>, null)  
+*			 |   |	
+*
+*Letter Index is stored  in Add Line and Remove Line so, that the cursor would sit at right place when ctrl-z.
+*Also note how lineIndex actually points to previous line.
+*This isnt possible when the Footprint's lineIndex and letterIndex had been stored in anyother way.
+*/
 class StrucChangeModule{
 	
 	footPrintSession = [];
@@ -9,7 +31,7 @@ class StrucChangeModule{
 		//enter at end
 		if (letterIndex >= struc.getLastLetterIndex()) {
 			
-			struc.addLine(lineIndex);
+			struc.addLine(lineIndex + 1);
 			this._createFootprintToken(lineIndex, letterIndex, "addLine", "enter", null);
 		}
 		//enter at begining or middle
@@ -26,7 +48,7 @@ class StrucChangeModule{
 
 			for (var i = 0; i < removed.length; i++) {
 				struc.add(lineIndex + 1, i, removed[i]);
-				this._createFootprintToken(lineIndex, i, "add", "enter", char);
+				this._createFootprintToken(lineIndex + 1, i, "add", "enter", char);
 			}
 		}
 	}
@@ -76,9 +98,15 @@ class StrucChangeModule{
 		this.footPrintSession = [];
 	}
 
+	getStructure() {
+		return struc.getStructure();
+	}
+
 	_createFootprintToken(lineIndex, letterIndex, command, method, char) {
 		var ift = new InstructionFootprintToken(lineIndex, letterIndex, command, method, char);
 		this.footPrintSession.push(ift);
 	}
 
 }
+
+export default new StrucChangeModule();

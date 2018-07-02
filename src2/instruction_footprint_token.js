@@ -1,4 +1,4 @@
- class InstructionFootprintToken {
+ export default class InstructionFootprintToken {
  	
  	//Integer >= 0
  	lineIndex;
