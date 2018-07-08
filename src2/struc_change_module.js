@@ -11,15 +11,13 @@ import InstructionFootprintToken from './instruction_footprint_token.js';
 *State | a | -> Instruction remove(0, 1) -> State | | -> Footprint (0, 1, 'remove', <methodname>, a)
 *
 *Add Line
-*State | a | -> Instruction addLine(1) -> State | a | -> Footprint (0, <letterIndex>, <methodName>, null)  
+*State | a | -> Instruction addLine(1) -> State | a | -> Footprint (1, 0, <methodName>, null)  
 *																								|   |
 *Remove Line
-*State | a | -> Instruction removeLine(1) -> State | a | -> Footprint (1, <letterIndex>, <methodName>, null)  
+*State | a | -> Instruction removeLine(1) -> State | a | -> Footprint (1, 0, <methodName>, null)  
 *			 |   |	
 *
-*Letter Index is stored  in Add Line and Remove Line so, that the cursor would sit at right place when ctrl-z.
-*Also note how lineIndex actually points to previous line.
-*This isnt possible when the Footprint's lineIndex and letterIndex had been stored in anyother way.
+*Add Line & Remove Line's, lineIndex and letterIndex is of form (any, 0) i.e. letter Index is always 0
 */
 class StrucChangeModule{
 	
@@ -93,9 +91,10 @@ class StrucChangeModule{
 		this._createFootprintToken(lineIndex, letterIndex, "add", "character", char)
 	}
 
-	getInstructionFootprintSession() {
-		return this.footPrintSession;
+	getFootPrints() {
+		let toReturn = this.footPrintSession;
 		this.footPrintSession = [];
+		return toReturn;
 	}
 
 	getStructure() {

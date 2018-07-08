@@ -1,5 +1,5 @@
 import struc from './struc_module.js';
-console.log(struc);
+
 class CaretChangeModule{
 	lineIndex = 0;
 	letterIndex = 0;
@@ -12,18 +12,40 @@ class CaretChangeModule{
 		return [this.lineIndex, this.letterIndex];
 	}
 	
+	_setCaretPosition(y, x) {
+		y = struc.getLastLineIndex() >= y? y: struc.getLastLineIndex();
+	  x = struc.getLastLetterIndex(y) >= x? x: struc.getLastLetterIndex(y);
+	 	this.lineIndex = y;
+	  this.letterIndex = x;
+	}
+
 	arrow(arrowType) {
-		throw "To be implemented."
+		let y = this.lineIndex;
+		let x = this.letterIndex;
+		switch (arrowType) {
+			case "ArrowUp":
+				this._setCaretPosition(y - 1, x);
+				break;
+	    case "ArrowLeft":
+	    	this._setCaretPosition(y, x - 1);
+	    	break;
+	    case "ArrowDown":
+	    	this._setCaretPosition(y + 1, x);
+	    	break;
+	    case "ArrowRight":
+	    	this._setCaretPosition(y, x + 1);
+	    	break;
+	    default:
+	    	throw "Arrow cases constraint violation."
+	    	break;
+		}	
 	}
 
 	/**
 	*Assumption that x >= 0 and y >= 0 ??
 	*/
 	mouseClick(y, x) {
-		y = struc.getLastLineIndex() >= y? y: struc.getLastLineIndex();
-	  x = struc.getLastLetterIndex(y) >= x? x: struc.getLastLetterIndex(y);
-	  this.lineIndex = y;
-	  this.letterIndex = x;
+		this._setCaretPosition(y, x);
 	}
 }
 

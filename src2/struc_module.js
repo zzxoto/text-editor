@@ -117,7 +117,7 @@ class LineFactory{
   next = null;
 
   add(letterIndex, char) {
-    if (letterIndex > data.length) {
+    if (letterIndex > this.data.length) {
       throw "Remove character constraint violation."
     }
     this.data = [...this.data];
@@ -126,7 +126,7 @@ class LineFactory{
   }
 
   remove(letterIndex) {
-    if (letterIndex == 0 || letterIndex > data.length) {
+    if (letterIndex == 0 || letterIndex > this.data.length) {
       throw "Remove character constraint violation."
     }
     this.data = [...this.data];

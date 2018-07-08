@@ -18,4 +18,4 @@ class Screen {
 }
 
 let screen = new Screen();
-export default screen;
+export { screen };

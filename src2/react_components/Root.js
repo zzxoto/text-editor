@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import screen from '../screen.js';
+import { screen } from '../screen.js';
 import Line from './LineComponent';
 
 class Root extends Component{
