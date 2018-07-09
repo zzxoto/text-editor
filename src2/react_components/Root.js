@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { screen } from '../screen.js';
+import { reactBridge } from '../react_bridge.js';
 import Line from './LineComponent';
 
 class Root extends Component{
@@ -12,7 +12,7 @@ class Root extends Component{
 	}
 
 	componentDidMount(){
-		screen.onChange((data)=>{
+		reactBridge.onChange((data)=>{
 			this.setState({data: data});
 		});
 	}

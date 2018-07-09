@@ -118,7 +118,7 @@ class LineFactory{
 
   add(letterIndex, char) {
     if (letterIndex > this.data.length) {
-      throw "Remove character constraint violation."
+      throw "Add character constraint violation."
     }
     this.data = [...this.data];
     this.data.splice(letterIndex, 0, char);
@@ -138,4 +138,6 @@ class LineFactory{
   }
 
 }
-export default new StrucModule();
+
+let struc = new StrucModule();
+export { struc };

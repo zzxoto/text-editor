@@ -1,4 +1,4 @@
-class Screen {
+class ReactBridge {
   
   callbacks = [];
 
@@ -17,5 +17,5 @@ class Screen {
   }
 }
 
-let screen = new Screen();
-export { screen };
+let reactBridge = new ReactBridge();
+export { reactBridge };
