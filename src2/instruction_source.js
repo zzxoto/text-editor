@@ -42,7 +42,7 @@ $(function(){
 	  }
 	});
 
- 	$("#editor").click(function(e){
+ 	$("#codeArea").click(function(e){
  		$ta.focus(); 
 	 	var clickX = e.clientX - $(this).offset().left;
 	  var clickY = e.clientY - $(this).offset().top;

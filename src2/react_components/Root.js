@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { reactBridge } from '../react_bridge.js';
-import Line from './LineComponent';
+import { reactBridge } from '../react_bridge';
+import CodeArea from './CodeAreaComponent';
+import NumberingSidebar from './NumberingSidebarComponent';
 
 class Root extends Component{
 	
 	constructor() {
 		super();
 		this.state = {
-			 data: ['a']
+			 data: [['a']]
 		};
 	}
 
@@ -18,17 +19,12 @@ class Root extends Component{
 	}
 
 	render(){
-		var lines = this.state.data.map( (line, index) => {
-			return(
-				<Line key={index}
-					id={index}
-					line={line}
-					className="line"
-				/>
-			)
-		});
 		return (
-			<React.Fragment>{lines}</React.Fragment>
+			<div class="main">
+				<textarea spellcheck="false" autocapitalize="off"></textarea>
+				<NumberingSidebar data={this.state.data} />
+				<CodeArea data={this.state.data} />
+			</div>
 		); 
 	}
 	

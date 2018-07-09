@@ -4,10 +4,17 @@
   <head>
     <title>CSS Challenge 2</title>
 		<style>
-			*{
+
+			body, html {
 				font-family: consolas;
 				font-size: 1em;
+				padding: 0px;
+				margin: 0px;
+				height: 100%;
+				width: 100%;
+				background-color: #252729;
 			}
+
 			textarea{
 				position: absolute;
 				left: -10px;
@@ -17,7 +24,6 @@
 			}
 			.line{
 				height: 20px;
-				background-color: lightBlue;
 			}
 			#editor{
 				position: relative;
@@ -34,15 +40,42 @@
 			.keyword{
 				color: blue;
 			}
+
+			.numbering {
+				border-right: 1px dotted #aec1c4;
+			}
+
+			.codeArea {
+				flex: 1;
+				background-color: #252729;
+				position: relative;
+				color: #e1ecf4;
+			}
+
+			.root {
+				height: 100%;
+				width: 100%;
+			}
+			.main {
+				display: flex;
+				height: 100%;
+				width: 100%;
+			}
+
+			.numberingSidebar {
+			  flex-basis: content;
+			  flex-grow: 0;
+			  flex-shrink: 0;
+			  background-color: #252729;
+			  padding: 0px 5px 0px 5px;
+			  text-align: center;
+			  color: #aec1c4;
+			}
 		</style>
 	</head>
 	
 	<body>
-	<textarea spellcheck="false" autocapitalize="off"></textarea>
-		<div id="editor">
-			<div id="caret"></div>
-			<div id="react-entry"></div>
-		</div>
+		<div id="root"></div>
 	</body>
 	<script src="./dist/app_v2.js"></script>
 </html>
