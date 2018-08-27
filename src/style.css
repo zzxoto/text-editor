@@ -1,0 +1,76 @@
+body, html {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  font-family: consolas;
+  line-height: 20px;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+
+.d-flex {
+  display: flex;
+}
+.flex-1 {
+  flex: 1;
+}
+
+.editor-master{
+  height: 100%;
+}
+.editor-master > div:first-child{
+  height: 30px;
+}
+.editor-master > div:last-child{
+  height: calc(100% - 30px);
+}
+
+.editor-wrapper-wrapper {
+  border-right: 1px solid black;
+}
+.editor-wrapper-wrapper:last-child {
+  border-right: none;
+}
+.editor-wrapper-wrapper > div:first-child {
+  height: 30px;
+}
+.editor-wrapper-wrapper > div:last-child {
+  height: calc(100% - 30px);
+}
+
+.numbering-sidebar {
+  flex-basis: content;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 0px 5px 0px 5px;
+}
+
+.caret {
+  height: 20px;
+  width: 2px;
+  background-color: black;
+  position: absolute;
+}
+
+.textbox-textarea {
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  height: 1px;
+  width: 1px;
+}
+
+.line {
+  height: 20px;
+}
