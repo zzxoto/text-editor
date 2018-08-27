@@ -60,7 +60,7 @@ export class EditorMaster extends Component {
           onClick={(event) => this.handleEditorClick(event, editor)}>
           <div>
             <button 
-              className="float-right"
+              className="float-right btn btn-black"
               onClick={() => this.handleDeleteEditor(editor)}>
               Delete
             </button>
@@ -77,7 +77,7 @@ export class EditorMaster extends Component {
     return (
       <div className="editor-master">
         <div>
-          <button onClick={this.handleAddEditor}>Add Editor</button>
+          <button onClick={this.handleAddEditor} className="btn btn-blue">Add Editor</button>
         </div>
         <div className="d-flex">
           {editorWrappers}

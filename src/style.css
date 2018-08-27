@@ -5,6 +5,7 @@ body, html {
   height: 100%;
   font-family: consolas;
   line-height: 20px;
+  background-color: #252729;
 }
 
 .h-100 {
@@ -25,6 +26,23 @@ body, html {
   flex: 1;
 }
 
+.btn {
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.btn-blue {background-color: #008CBA;} /* Blue */
+.btn-red {background-color: #f44336;} /* Red */ 
+.btn-grey {background-color: #e7e7e7; color: black;} /* Gray */ 
+.btn-black {background-color: #555555;} /* Black */
+
 .editor-master{
   height: 100%;
 }
@@ -36,7 +54,7 @@ body, html {
 }
 
 .editor-wrapper-wrapper {
-  border-right: 1px solid black;
+  border-right: 1px solid #aec1c4;
 }
 .editor-wrapper-wrapper:last-child {
   border-right: none;
@@ -54,12 +72,18 @@ body, html {
   flex-shrink: 0;
   text-align: center;
   padding: 0px 5px 0px 5px;
+  color: #aec1c4;
+}
+
+.numbering {
+  padding-right: 3px;
+  border-right: 1px dotted #aec1c4;
 }
 
 .caret {
   height: 20px;
   width: 2px;
-  background-color: black;
+  background-color: #aec1c4;
   position: absolute;
 }
 
@@ -73,4 +97,6 @@ body, html {
 
 .line {
   height: 20px;
+  color: #e1ecf4;
 }
+
