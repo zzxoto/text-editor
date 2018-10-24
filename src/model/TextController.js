@@ -54,76 +54,41 @@ class TextController {
     }
 
     left() {
-        this.cursors.forEach((c, i) => {
-            if (c.getCursorHeadIndex() > 0) {
-                let newCursorPos = c.getCursorHeadIndex() - 1;
-                c.placeCursor(this.text.getCharItem(newCursorPos));
-            }
-        });
+
+        this.__left((cursor, newPos) => cursor.placeCursor(this.text.getCharItem(newPos)));
         this.__resolveCursorInConflict((cursor1, cursor2) => cursor1);
     }
 
     right() {
-        this.cursors.forEach((c, i) => {
-            if (c.getCursorHeadIndex() < this.text.getLastCharItemIndex()) {
-                let newCursorPos = c.getCursorHeadIndex() + 1;
-                c.placeCursor(this.text.getCharItem(newCursorPos));
-            }
-        });
-        this.__resolveCursorInConflict((cursor1, cursor2) => cursor2);
+
+        this.__right((cursor, newPos) => cursor.placeCursor(this.text.getCharItem(newPos)));
+        this.__resolveCursorInConflict((cursor1, cursor2) => cursor1);
     }
 
     up() {
-        
-        this.cursors.forEach((c, i) => {
-            let cursorHead = c.getCursorHeadIndex(),
-                prevNewLine = this.text.getPrevNewLineIndex(cursorHead),
-                prevprevNewLine = this.text.getPrevNewLineIndex(prevNewLine);
-
-            prevNewLine = prevNewLine == LEFT_OUTOFBOUND_TEXTINDEX? 0: prevNewLine,
-            prevprevNewLine = prevprevNewLine == LEFT_OUTOFBOUND_TEXTINDEX? 0: prevprevNewLine;
-
-            let newCursorPos = (prevprevNewLine + (cursorHead - prevNewLine)) <= prevNewLine? 
-                prevprevNewLine + (cursorHead - prevNewLine): prevNewLine;
-            
-            c.placeCursor(this.text.getCharItem(newCursorPos));
-        });
-        this.__resolveCursorInConflict((cursor1, cursor2) => cursor2);
+        this.__up((cursor, newPos) => { cursor.placeCursor(newPos)});
+        this.__resolveCursorInConflict((cursor1, cursor2) => cursor1);
     }
 
     down() {
-        this.cursors.forEach((c, i) => {
-            let cursorHead = c.getCursorHeadIndex(),
-                prevNewLine = this.text.getPrevNewLineIndex(cursorHead),
-                nextNewLine = this.text.getNextNewLineIndex(cursorHead),
-                nextnextNewLine = this.text.getNextNewLineIndex(nextNewLine);
-            
-            prevNewLine = prevNewLine == LEFT_OUTOFBOUND_TEXTINDEX? 0: prevNewLine;
-            nextNewLine = nextNewLine == RIGHT_OUTOFBOUND_TEXTINDEX? this.text.getLastCharItemIndex(): nextNewLine;
-            nextnextNewLine = nextnextNewLine == RIGHT_OUTOFBOUND_TEXTINDEX? this.text.getLastCharItemIndex(): nextnextNewLine;
-            
-            let newCursorPos = (nextNewLine + (prevNewLine - cursorHead)) <= nextnextNewLine?
-                nextNewLine + (prevNewLine - cursorHead): nextnextNewLine;
-            
-            c.placeCursor(this.text.getCharItem(newCursorPos));
-        });
-        this.__resolveCursorInConflict((cursor1, cursor2) => cursor2);
+        this.__down((cursor, newPos) => cursor.placeCursor(newPos));
+        this.__resolveCursorInConflict((cursor1, cursor2) => cursor1);
     }
     shiftLeft() {
-
-        this.__resolveCursorInConflictLeft((cursor1, cursor2) => {
-            let leftyHead = cursor1.;
-            let rightyHead = ;
-        });
+        this.__left((cursor, newPos) => cursor.placeCursorHead(this.text.getCharItem(newPos)));
+        this.__resolveCursorConflictLeftHead();
     }
     shiftRight() {
-        this.__resolveCursorInConflictRight();
+        this.__right((cursor, newPos) => cursor.placeCursorHead(this.text.getCharItem(newPos)));
+        this.__resolveCursorConflictRightHead();
     }
     shiftUp() {
-        this.__resolveCursorInConflictLeft();
+        this.__up((cursor, newPos) => { cursor.placeCursorHead(newPos)});
+        this.__resolveCursorConflictLeftHead();
     }
     shiftDown() {
-        this.__resolveCursorInConflictRight();
+        this.__down((cursor, newPos) => cursor.placeCursorTail(newPos));
+        this.__resolveCursorConflictRightHead();
     }
     insert(char) {
 
@@ -150,6 +115,9 @@ class TextController {
 
         for (let c1 of this.cursors) {
             let _c_ = c1;
+            
+            if (conflictCursors.has(_c_)) 
+                continue;
 
             for (let c2 of this.cursors ) {
                 if (Cursor.doesConflict(_c_, c2)) {
@@ -162,6 +130,80 @@ class TextController {
         }
         //TODO remove cursor calling c.removeCursor()
         this.cursors = nonConflictCursors;
+    }
+
+    __resolveCursorConflictLeftHead() {
+        this.__resolveCursorConflict(() => {
+            let leftyHead = cursor1.getCursorHeadIndex() < cursor2.getCursorHeadIndex()? 
+                cursor1.getCursorHeadIndex(): cursor2.getCursorHeadIndex();
+            let rightyTail = cursor1.getCursorTailIndex() > cursor2.getCursorTailIndex()?
+                cursor1.getCursorTailIndex(): cursor2.getCursorTailIndex();
+            return newCursor(this.text.getCharItem(leftyHead), this.text.getCharItem(rightyTail));
+        })
+    }
+
+    __resolveCursorConflictRightHead() {
+        this.__resolveCursorConflict((cursor1, cursor2) => {
+            let rightyHead = cursor1.getCursorHeadIndex() > cursor2.getCursorHeadIndex()? 
+                cursor1.getCursorHeadIndex(): cursor2.getCursorHeadIndex();
+            let leftyTail = cursor1.getCursorTailIndex() < cursor2.getCursorTailIndex()?
+                cursor1.getCursorTailIndex(): cursor2.getCursorTailIndex();
+            return newCursor(this.text.getCharItem(leftyHead), this.text.getCharItem(rightyTail));
+        });
+    }
+
+    __left(cb) {
+        for (var c of this.cursors){
+            if (c.getCursorHeadIndex() > 0) {
+                let newPos = c.getCursorHeadIndex() - 1;
+                cb(c, newPos);
+            }
+        }
+    }
+
+    __right(cb) {
+        for(var c of this.cursors) {
+            if (c.getCursorHeadIndex() < this.text.getLastCharItemIndex()) {
+                let newPos = c.getCursorHeadIndex() + 1;
+                cb(c, newPos)
+                c.placeCursor(this.text.getCharItem(newPos));
+            }
+        }
+    }
+
+    __up(cb) {
+        for(var c of this.cursors) {
+            let cursorHead = c.getCursorHeadIndex(),
+                prevNewLine = this.text.getPrevNewLineIndex(cursorHead),
+                prevprevNewLine = this.text.getPrevNewLineIndex(prevNewLine);
+            
+            prevNewLine = prevNewLine == LEFT_OUTOFBOUND_TEXTINDEX? 0: prevNewLine,
+            prevprevNewLine = prevprevNewLine == LEFT_OUTOFBOUND_TEXTINDEX? 0: prevprevNewLine;
+            
+            let newPos = (prevprevNewLine + (cursorHead - prevNewLine)) <= prevNewLine? 
+                prevprevNewLine + (cursorHead - prevNewLine): prevNewLine;
+            
+            cb(c, newPos)
+            
+        }
+    }
+
+    __down(cb) {
+        for(var c of this.cursors) {
+            let cursorHead = c.getCursorHeadIndex(),
+                prevNewLine = this.text.getPrevNewLineIndex(cursorHead),
+                nextNewLine = this.text.getNextNewLineIndex(cursorHead),
+                nextnextNewLine = this.text.getNextNewLineIndex(nextNewLine);
+            
+            prevNewLine = prevNewLine == LEFT_OUTOFBOUND_TEXTINDEX? 0: prevNewLine;
+            nextNewLine = nextNewLine == RIGHT_OUTOFBOUND_TEXTINDEX? this.text.getLastCharItemIndex(): nextNewLine;
+            nextnextNewLine = nextnextNewLine == RIGHT_OUTOFBOUND_TEXTINDEX? this.text.getLastCharItemIndex(): nextnextNewLine;
+            
+            let newPos = (nextNewLine + (prevNewLine - cursorHead)) <= nextnextNewLine?
+                nextNewLine + (prevNewLine - cursorHead): nextnextNewLine;
+            
+            cb(c, newPos);
+        }
     }
 }
 /*
