@@ -11,93 +11,70 @@ Delete from lesser to Greater - 1
  * cursor
  */
 class Cursor {
-    constructor(text, head, tail) {//@param head,tail index or obj
-        this.cursorHead = head;
-        this.cursorTail = tail;
+    constructor(text, head, tail) {//@param text obj, head int; tail int
+        this.head = head;
+        this.tail = tail;
         this.text = text;
     }
-    /**
-     * Depends on [H, T) and [T, H)
-     */
-    getSelectionRange() {
-        
-    }
-    getCursorHeadIndex() {
+    
+    get low() { return this.head > this.tail? this.tail: this.head; }
+    get high() { return this.head > this.tail? this.head: this.tail; }
 
-    }
-    getCursorTailIndex() {
-
-    }
-    placeCursorHead(char) {//char or index
-
-    }
-    placeCursorTail(char) {//char or index
-
-    }
-    placeCursor() {
-        this.text.getCharItemPos(pos);
-    }
-    removeCursor() {
-    }
     left() {
         let pos = this.__left();
-        this.placeCursor(pos);
-        this.cursorHead = this.text.getCharItemPos(pos);
-        this.cursorTail = this.cursorTail;
+        this.head = pos;
+        this.tail = pos;
     }
 
     right() {
         let pos = this.__right();
-        this.cursorHead = this.text.getCharItemPos(pos);
-        this.cursorTail = this.cursorTail;
+        this.head = pos;
+        this.tail = pos;
     }
 
     up() {
         let pos = this.__up();
-        this.cursorHead = this.text.getCharItemPos(pos);
-        this.cursorTail = this.cursorTail;
+        this.head = pos;
+        this.tail = pos;
     }
 
     down() {
         let pos = this.__down();
-        this.cursorHead = this.text.getCharItemPos(pos);
-        this.cursorTail = this.cursorTail;
+        this.head = pos;
+        this.tail = pos;
     }
 
     shiftLeft() {
         let pos = this.__left();
-        this.cursorHead = this.text.getCharItemPos(pos);
+        this.head = pos;
     }
 
     shiftRight() {
         let pos = this.__right();
-        this.cursorHead = this.text.gertCharItem(pos);
+        this.head = pos;
     }
 
     shiftUp() {
         let pos = this.__up();
-        this.cursorHead = this.text.gertCharItem(pos);
+        this.head = pos;
     }
 
     shiftDown() {
         let pos = this.__down();
-        this.cursorHead = this.text.gertCharItem(pos);
+        this.head = pos;
     }
-
+     
     __left() {
-        let headPos = this.text.getCharItemPos(this.cursorHead);
-        return headPos > 0? headPos - 1: 0;
+        return this.head >= 1? this.head - 1: 0;
     }
 
     __right() {
-
-        let headPos = this.text.getCharItemPos(this.cursorHead);
-        return headPos < this.text.getLastCharItemPos()? 
-            headPos + 1: this.text.getLastCharItemPos();
+        let lastPos = this.text.getLastCharItemIndex();
+        this.head >= lastPos? lastPos: this.head + 1;
     }
 
     __up() {
-        let head = this.text.getCharItemPos(this.cursorHead),
+        let head = this.head,
             prevNewLine = this.text.getPrevNewLineIndex(head),
             prevprevNewLine = this.text.getPrevNewLineIndex(prevNewLine);
         
@@ -111,9 +88,9 @@ class Cursor {
     }
 
     __down() {
-        let head = this.text.getCharItemPos(this.cursorHead),
+        let head = this.head,
             prevNewLine = this.text.getPrevNewLineIndex(head),
-            nextNewLine = this.text.getNextNewLineIndex(cursorHead),
+            nextNewLine = this.text.getNextNewLineIndex(head),
             nextnextNewLine = this.text.getNextNewLineIndex(nextNewLine);
         
         prevNewLine = prevNewLine == LEFT_OUTOFBOUND_TEXTINDEX? 0: prevNewLine;
@@ -128,10 +105,10 @@ class Cursor {
 }
 
 Cursor.doesConflict = function(c1, c2) {
-    let h1 = c1.getCursorHeadIndex(),
-        h2 = c2.getCursorHeadIndex(),
-        t1 = c1.getCursorTailIndex(),
-        t2 = c2.getCursorTailIndex();
+    let h1 = c1.head,
+        h2 = c2.head,
+        t1 = c1.tail,
+        t2 = c2.tail;
         
     return (c1 !== c2) && (
         (h1 == h2) ||
