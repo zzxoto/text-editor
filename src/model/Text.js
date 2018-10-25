@@ -2,10 +2,10 @@ class Text {
     constructor() {
         this.charItems = [];//TODO atelase one char '\n' in minimum?
     }
-    getIndex(char) {
+    getCharItemPos(char) {
         return this.charItems.indexOf(char);
     }
-    getLastCharItemIndex() {
+    getLastCharItemPos() {
         return this.charItems.length - 1;
     }
     getCharItem(i) {
