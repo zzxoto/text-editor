@@ -1,3 +1,6 @@
+//TODO test
+import {SafeDelete} from './Delete';
+
 export class Insert {
   constructor(text, from, chars) {
     this.text = text;
@@ -6,8 +9,8 @@ export class Insert {
     this.chars = chars;
   }
 
-  restore() {
-    return new Delete(this.text, this.from, this.to)
+  revert() {
+    return new SafeDelete(this.text, this.from, this.to)
       .exec();
   }
 
@@ -15,8 +18,33 @@ export class Insert {
     this.text.insert(this.from, this.chars);
     return this;
   }
+}
 
-  getChars() {
-    return this.chars;
+//can't revert more than once
+//can't exec more than once
+//can't revert if exec not called
+export class SafeInsert extends Insert {
+
+  constructor(text, from, chars) {
+    super(text, from, chars);
+    this.reverted = false;
+    this.execd = false;
+  }
+
+  revert() {
+    if (this.reverted)
+      throw new Error('Revert already called');
+    
+    if (!this.execd)
+      throw new Error('Exec has not been called');
+
+    return super.revert();
+  }
+  
+  exec() {
+    if (this.execd)
+      throw new Error('Exec already called');
+
+    return super.exec();
   }
 }

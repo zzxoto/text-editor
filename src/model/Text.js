@@ -1,3 +1,5 @@
+import {Iterator} from './Iterator';
+
 export class Text {
   constructor() {
     this.chars = ['EOF'];//eof file always present at last
@@ -50,7 +52,7 @@ export class Text {
   
   iterator(from = 0, to = this.length) {
     return new Iterator(this.chars)
-      .from(i)
+      .from(from)
       .to(to);
   }
 }
