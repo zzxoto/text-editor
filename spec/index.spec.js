@@ -1,2 +1,2 @@
-import * as x from './line.spec.js';
-import * as y from './lineModule.spec.js';
+import * as x from './iterator.spec';
+import * as y from './text.spec';
