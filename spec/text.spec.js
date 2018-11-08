@@ -257,7 +257,7 @@ describe('getPrevNewLineIndex', () => {
       let i = text.getPrevNewLineIndex(6);
       fail('It should have thrown error');
     }
-    catch(err) { }
+    catch(err) { }//TODO this test case should change now
   })
 })
 

@@ -30,7 +30,7 @@ export class Text {
   }
 
   getNextNewLineIndex(index) {
-    if (index < 0 || index >= this.length)
+    if (index < 0 || index > this.length)
       throw new Error('IndexOutOfBound');
 
     for (var i = index + 1; i < this.length; i++ ) {
@@ -40,7 +40,7 @@ export class Text {
     return -1;
   }
   getPrevNewLineIndex(index) {
-    if (index < 0 || index >= this.length)
+    if (index < 0 || index > this.length)
       throw new Error('IndexOutOfBound');
 
     for (var i = index - 1; i >= 0; i-- ) {
@@ -50,7 +50,7 @@ export class Text {
     return -1;
   }
   
-  iterator(from = 0, to = this.length) {
+  iterator(from = 0, to = this.chars.length - 1) {
     return new Iterator(this.chars)
       .from(from)
       .to(to);

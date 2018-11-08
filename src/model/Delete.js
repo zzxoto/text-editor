@@ -1,4 +1,3 @@
-//TODO test
 import {SafeInsert} from './Insert';
 
 export class Delete {
@@ -9,7 +8,6 @@ export class Delete {
     this.chars = null;
   }
 
-  //TODO if not execed throw error
   revert() {
     return new SafeInsert(this.text, this.from, this.chars)
       .exec();
@@ -30,8 +28,8 @@ export class Delete {
 //can't revert if exec not called
 export class SafeDelete extends Delete {
 
-  constructor(text, from, chars) {
-    super(text, from, chars);
+  constructor(text, from, to) {
+    super(text, from, to);
     this.reverted = false;
     this.execd = false;
   }
@@ -43,6 +41,7 @@ export class SafeDelete extends Delete {
     if (!this.execd)
       throw new Error('Exec has not been called');
 
+    this.reverted = true;
     return super.revert();
   }
   
@@ -50,6 +49,7 @@ export class SafeDelete extends Delete {
     if (this.execd)
       throw new Error('Exec already called');
 
+    this.execd = true;
     return super.exec();
   }
 }

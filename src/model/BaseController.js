@@ -6,9 +6,9 @@ import {Delete} from './Delete';
 
 export class BaseController {
 
-  constructor() {
-    this.cursor = new Cursor();
-    this.text = new Text();
+  constructor(cursor, text) {
+    this.cursor = cursor;
+    this.text = text;
   }
 
   left() {
@@ -21,6 +21,7 @@ export class BaseController {
     }
     else {
       this.cursor.head -= 1;
+      this.cursor.tail = this.cursor.head;
     }
   }
 
@@ -34,6 +35,7 @@ export class BaseController {
     }
     else {
       this.cursor.head += 1;
+      this.cursor.tail = this.cursor.head;
     }
   }
 
@@ -133,11 +135,11 @@ export class BaseController {
   //TODO test
   _up() {
     let head = this.cursor.head,
-      pnl = this.text.getPrevNewLineIndex(head),
-      ppnl = this.text.getPrevNewLineIndex(pnl);
+      pnl = this.text.getPrevNewLineIndex(head);
+      pnl = pnl == -1? 0: pnl;
 
-    pnl = pnl == -1? 0: pnl,
-    ppnl = ppnl == -1? 0: pnl;
+      let ppnl = this.text.getPrevNewLineIndex(pnl);
+      ppnl = ppnl == -1? 0: ppnl;
 
     let newHead = (ppnl + (head - pnl)) <= pnl? 
       ppnl + (head - pnl): pnl;

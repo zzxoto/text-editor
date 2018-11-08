@@ -27,9 +27,10 @@ export class UndoRedo {
     this._throwIfInSession();
 
     if (!this.undoSessions.length)
-      return;
+      return false;
     
     this.redoSessions.push(this.undoSessions.pop().revert());
+    return true;
   }
 
   //throws error if in middle of session
@@ -37,9 +38,10 @@ export class UndoRedo {
     this._throwIfInSession();
 
     if (!this.redoSessions.length)
-      return;
+      return false;
     
     this.undoSessions.push(this.redoSessions.pop().revert());
+    return true;
   }
 
   //returns UndoRedoSession

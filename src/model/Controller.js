@@ -2,9 +2,9 @@ import {BaseController} from './BaseController';
 import {UndoRedo} from './UndoRedo';
 
 export class Controller extends BaseController{
-  constructor() {
-    super();
-    this.undoRedo = new UndoRedo();
+  constructor(undoRedo, cursor, text) {
+    super(cursor, text);
+    this.undoRedo = undoRedo;
     this.clipboard = [];
   }
 
@@ -31,7 +31,7 @@ export class Controller extends BaseController{
   }
 
   insert(chars) {
-    let memento = new this.undoRedo.startSession();
+    let memento = this.undoRedo.startSession();
     super.insert(chars, memento);
     this.undoRedo.saveSession();
   }
@@ -69,4 +69,5 @@ export class Controller extends BaseController{
   ctrlDelete() {
     //later
   }
-}
+ }
+                       

@@ -38,6 +38,7 @@ export class SafeInsert extends Insert {
     if (!this.execd)
       throw new Error('Exec has not been called');
 
+    this.reverted = true;
     return super.revert();
   }
   
@@ -45,6 +46,7 @@ export class SafeInsert extends Insert {
     if (this.execd)
       throw new Error('Exec already called');
 
+    this.execd = true;
     return super.exec();
   }
 }

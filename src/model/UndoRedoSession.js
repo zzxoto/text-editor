@@ -21,8 +21,8 @@ export class UndoRedoSession {
 
     let session = [];
 
-    while(this.store.length > 0) {
-      session.push(this.store.pop().revert());
+    while(this.session.length > 0) {
+      session.push(this.session.pop().revert());
     }
 
     this.session = session;
