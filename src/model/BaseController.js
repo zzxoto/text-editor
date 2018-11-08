@@ -1,5 +1,8 @@
 import {Cursor} from './Cursor';
 import {Text} from './Text';
+import {SaveCursor} from './SaveCursor';
+import {Insert} from './Insert';
+import {Delete} from './Delete';
 
 export class BaseController {
 
@@ -73,10 +76,7 @@ export class BaseController {
   //if selection delete low to high - 1
   //else delete low - 1
   backspace(memento) {
-    if (!this._isInSelection() && this.cursor.head == 0)
-      return;
-
-    memento.add(new RestoreCursor(this.cursor));
+    memento.add(new SaveCursor(this.cursor));
 
     if (this._isInSelection()) {
       memento.add(this._delete(this.cursor.low, this.cursor.high - 1));
@@ -91,27 +91,21 @@ export class BaseController {
   }
 
   delete(memento) {
-    if (!this._isInSelection() && this.cursor.head == this.text.length)
-      return;
-
-    memento.add(new RestoreCursor(this.cursor));
+    memento.add(new SaveCursor(this.cursor));
 
     if (this._isInSelection()) {
       memento.add(this._delete(this.cursor.low, this.cursor.high - 1));
       this.cursor.head = this.cursor.low;
       this.cursor.tail = this.cursor.head;
-      
     }
     else {
       memento.add(this._delete(this.cursor.low, this.cursor.low));
     }
-    
-    this.mementos.push(memento);
   }
 
   //if selection
   insert(chars, memento) {
-    memento.add(new RestoreCursor(this.cursor));
+    memento.add(new SaveCursor(this.cursor));
 
     if (this._isInSelection()) {
       memento.add(this._delete(this.cursor.low, this.cursor.high - 1));

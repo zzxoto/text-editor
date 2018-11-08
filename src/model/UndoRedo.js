@@ -58,6 +58,7 @@ export class UndoRedo {
       throw new Error('Session not started');
 
     this.undoSessions.push(this.currentSession);
+    this.currentSession = null;
   }
 
   //returns current session or null if not in current session

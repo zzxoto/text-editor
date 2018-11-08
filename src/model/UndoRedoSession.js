@@ -1,7 +1,7 @@
 //TODO may need more work
 export class UndoRedoSession {
   constructor() {
-    this.session = [];//array of objects that revert methods
+    this.session = [];//array of objects with revert methods
     this.reverted = false;
   }
 
@@ -16,6 +16,9 @@ export class UndoRedoSession {
 
   //maybe reverted multiple times
   revert() {
+    if (this.session.length == 0)
+      throw new Error('Nothing added as session to revert.');
+
     let session = [];
 
     while(this.store.length > 0) {
